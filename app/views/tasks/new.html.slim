@@ -1,0 +1,9 @@
+h1 新規タスク作成
+= form_with model: Task.new, local: true do |form|
+  = form.label :name
+  = form.text_field :name
+  br
+  = form.label :rest
+  = form.text_field :rest
+  br
+  = form.submit

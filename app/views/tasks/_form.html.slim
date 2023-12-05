@@ -1,0 +1,9 @@
+
+= form_with model: task do |form|
+  = form.label :name
+  = form.text_field :name
+  br
+  = form.label :rest
+  = form.check_box :rest
+  br
+  = form.submit
