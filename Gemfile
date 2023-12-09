@@ -66,8 +66,18 @@ group :test do
   gem "selenium-webdriver"
 end
 
+group :development, :test do
+  gem 'rubocop', require: false
+  gem 'solargraph', require: false
+end
+
+
 
 gem 'slim-rails'
 gem 'html2slim'
 gem 'bootstrap'
 gem "sassc-rails"
+
+#一日のタスク時間
+gem 'chartkick'
+gem 'groupdate'

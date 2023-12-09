@@ -1,9 +1,51 @@
-h1 ToDoリスト
+h1 ToDoリストeeghhh
+
+
+
+h2 新規タスク
+= link_to '新規作成', new_task_path , class: "btn btn-primary"
+p
+p 
+
+- if @current_task.present?
+  table
+    tr
+      th 現在のタスク
+      td= @current_task.name
+      td= link_to '作業を完了する', next_task_path(@current_task), method: :post, class: "btn btn-primary"
+    tr
+      - if @next_task.present?
+        th = "Next ⇨ #{@next_task.name}"
+      - else
+        th = "Next ⇨ 次のタスクはありません。上記のタスクで最後です。"
+- else
+  table
+    tr
+      th 現在タスクはありません。追加しましょう。
+      th= link_to '新規作成', new_task_path, class: "btn btn-primary"
+
+
+h2 全体タスク一覧
 - @tasks.each do |task|
   = task.name
-  = task.rest
-  br
-p
 p
 
-= link_to '新規作成', new_task_path
+h2 作業時間トラッキング
+
+- @tasks.each do |task|
+  table
+    td= task.name
+    td= task.complete
+      br
+      - if task.start_time.present?
+        | 開始時刻: #{task.start_time}
+        br
+      - if task.end_time.present?
+        | 終了時刻: #{task.end_time}
+        br
+        | 作業時間: #{task.end_time - task.start_time} 秒
+        br
+      - else
+        = link_to '作業を開始する', start_task_path(task), method: :post, class: "btn btn-primary"  unless task.start_time.present?
+        = link_to '作業を終了する', stop_task_path(task), method: :patch, class: "btn btn-primary"  if task.start_time.present?
+        br

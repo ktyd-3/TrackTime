@@ -1,0 +1,11 @@
+h1 タスク作業記録
+
+- if @task_track.present?
+  p 開始時刻: #{@task_track.start_time}
+  - if @task_track.end_time.present?
+    p 終了時刻: #{@task_track.end_time}
+    p 作業時間: #{@task_track.duration}
+  - else
+    = link_to '作業を終了する', "/task_track/stop", method: :patch
+- else
+  = link_to '作業を開始する', "/task_track/start", method: :post

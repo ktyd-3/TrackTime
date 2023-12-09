@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_03_124242) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_07_013731) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,19 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_03_124242) do
     t.string "rest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "complete", default: 0
   end
 
+  create_table "time_tracks", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "task_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_time_tracks_on_task_id"
+  end
+
+  add_foreign_key "time_tracks", "tasks"
 end
