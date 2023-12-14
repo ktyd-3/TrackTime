@@ -78,6 +78,7 @@ gem 'html2slim'
 gem 'bootstrap'
 gem "sassc-rails"
 
-#一日のタスク時間
+#JS管理
+gem 'webpacker', '~> 5.x'
+
 gem 'chartkick'
-gem 'groupdate'

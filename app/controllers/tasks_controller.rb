@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   def index
     @tasks = Task.all.order(created_at: :asc)
-    #まだcompleteが更新されていないタスクを持ってくる。
+    @today_tasks = Task.where("DATE(created_at) = ?", Date.today).order(created_at: :asc)
+    #まだcompleteが更新されていないタスク
     @current_task = Task.find_by(complete: 0)
     if @current_task.present?
       @next_task = Task.where("id > ? AND complete = ?", @current_task.id, 0).first
@@ -16,15 +17,19 @@ class TasksController < ApplicationController
   def start
     @task = Task.find(params[:id])
     @task.update(start_time: Time.current)
-    redirect_to tasks_path, notice: 'タスクの作業を開始しました。'
+    redirect_to track_tasks_path, notice: 'タスクの作業を開始しました。'
   end
 
   def stop
     @task = Task.find(params[:id])
     @task.update(end_time: Time.current)
-    redirect_to tasks_path, notice: 'タスクの作業を終了しました。'
+    redirect_to track_tasks_path, notice: 'タスクの作業を終了しました。'
   end
 
+  def track
+    @today_tasks = Task.where("DATE(created_at) = ?", Date.today)
+    @task_data = @today_tasks.map { |task| [task.name, task.end_time - task.start_time] }
+  end
 
   def next
     @task = Task.find(params[:id])
@@ -41,13 +46,13 @@ class TasksController < ApplicationController
 
 
   def create
-    @task = Task.new(task_params)
-    if @task.save
-      redirect_to tasks_path, notice: '登録が完了しました'
-    else
-      render 'new'
+    task_params = params.require(:task).permit(name: [])
+    task_params[:name].each do |name|
+      Task.create(name: name)
     end
+      redirect_to tasks_path, notice: '登録が完了しました'
   end
+
 
   private
   def task_params

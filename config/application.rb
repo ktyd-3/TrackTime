@@ -9,6 +9,11 @@ Bundler.require(*Rails.groups)
 module TrackTime
   class Application < Rails::Application
 
+  # タイムゾーンを日本時間に設定
+  config.time_zone = 'Tokyo'
+
+  # データベースも日本時間で保存
+  config.active_record.default_timezone = :local
 
 
     # Initialize configuration defaults for originally generated Rails version.
