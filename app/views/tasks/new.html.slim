@@ -1,7 +1,7 @@
 h1 新規タスク作成
 
-true do |form|
+= form_with model: Task.new, local: true do |form|
   - 4.times do |i|
     = form.text_field "name[]", multiple: true, name: "task[name][]"
-    br/
+    br
   = form.submit nil, class: 'btn btn-primary'

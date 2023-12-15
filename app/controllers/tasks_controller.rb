@@ -3,10 +3,9 @@ class TasksController < ApplicationController
     @tasks = Task.all.order(created_at: :asc)
     @today_tasks = Task.where("DATE(created_at) = ?", Date.today).order(created_at: :asc)
     #まだcompleteが更新されていないタスク
-    @current_task = Task.find_by(complete: 0)
-    if @current_task.present?
-      @next_task = Task.where("id > ? AND complete = ?", @current_task.id, 0).first
-    end
+    @current_task = Task.find_by(complete: 0,start_time: nil)
+
+    @next_task = Task.where("id > ? AND complete = ?", @current_task.id, 0).first if @current_task.present?
     @tasks_by_hour = Task.group("DATE_TRUNC('hour', start_time)").sum("EXTRACT(epoch FROM (end_time - start_time)) / 3600")
   end
 

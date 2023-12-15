@@ -9,6 +9,11 @@ html
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
   body
-    - if flash.notice.present?
-      .alert.alert-success= flash.notice
-    = yield
+    header
+      nav
+        = link_to 'タスク一覧 ', root_path
+        = link_to '新規作成 ', new_task_path
+        = link_to '時間計測', track_tasks_path
+      - if flash.notice.present?
+        .alert.alert-success= flash.notice
+      = yield

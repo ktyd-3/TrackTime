@@ -1,33 +1,34 @@
-h2 今日の合計作業時間
 - sum_time = 0
 - @today_tasks.each do |task|
   - task_time = task.start_time.present? && task.end_time.present? ? (task.end_time - task.start_time).to_i : 0
   - sum_time += task_time
 
+h2 今日の合計作業時間
 - if sum_time < 60
-  = "#{sum_time} 秒"
+  | "#{sum_time} 秒"
 - else 
-  = "#{sum_time / 60} 分"
+  | "#{sum_time / 60} 分"
 
-= line_chart @task_data, discrete: true, library: { hAxis: { title: 'Task' }, vAxis: { title: 'Time' } } 
+= pie_chart @task_data, library: { title: { text: 'Task Distribution' } } 
+
 
 h2 作業時間トラッキング
 
 - @today_tasks.each do |task|
   = task.name
-  br/
+  br
   - if task.start_time.present?
     | 開始時刻: #{task.start_time.strftime('%H時%M分%S秒')}
-    br/
+    br
   - if task.end_time.present?
     | 終了時刻: #{task.end_time.strftime('%H時%M分%S秒')}
     br/
     - if (task.end_time - task.start_time) < 60
-      | 作業時間: #{task.end_time - task.start_time} 秒
+      | 作業時間: #{(task.end_time - task.start_time).to_i} 秒
     - else
-      | 作業時間: #{(task.end_time - task.start_time) / 60 } 分
-    br/
+      | 作業時間: #{(task.end_time - task.start_time).to_i / 60 } 分
+    br
   - else
     = link_to '作業を開始する', start_task_path(task), method: :post, class: "btn btn-primary"  unless task.start_time.present?
     = link_to '終了する', stop_task_path(task), method: :patch, class: "btn btn-primary"  if task.start_time.present?
-    br/
+    br
