@@ -11,11 +11,14 @@ Rails.application.routes.draw do
       get 'start'
       get 'stop'
       get 'track'
+      get 'destroy'
     end
 
     collection do
       get 'track'
     end
+
+    delete 'destroy', on: :member
 
   end
 

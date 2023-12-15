@@ -1,38 +1,52 @@
-h1 ToDoリスト
+h1 TrackTimeToDo
 
-
+br
+br
 
 h2 新規タスク
 = link_to '新規作成', new_task_path , class: "btn btn-primary"
-p
-p 
+br
+br
 
 - if @current_task.present?
   table
     tr
       th
-      h2=現在のタスク
-      td= @current_task.name
+        | 現在のタスク ⇨ #{@current_task.name}
       td= link_to '作業を完了する', next_task_path(@current_task), method: :post, class: "btn btn-primary"
       td= link_to '時間を記録する', start_task_path(@current_task), method: :post, class: "btn btn-primary"  unless @current_task.start_time.present?
       td= link_to '記録を終了する', stop_task_path(@current_task), method: :patch, class: "btn btn-primary"  if @current_task.start_time.present?
     tr
       - if @next_task.present?
-        th = "Next ⇨ #{@next_task.name}"
+        td = "Next ⇨ #{@next_task.name}"
       - else
-        th = "Next ⇨ 次のタスクはありません。上記のタスクで最後です。"
+        td = "Next ⇨ 次のタスクはありません。上記のタスクで最後です。"
 - else
   table
     tr
       th 現在タスクはありません。追加しましょう。
       th= link_to '新規作成', new_task_path, class: "btn btn-primary"
 
-今日の全体タスク一覧
-br/
-- @today_tasks.each do |task|
-  = "・#{task.name}"
-  br/
-pa
+
+br
+br
+
+
+
+h2 今日の全体タスク一覧
+.tasks-container
+  - @today_tasks.each do |task|
+    .task
+    br
+      = "・#{task.name}"
+      span.buttons
+        = link_to '編集', edit_task_path(task), class: 'btn btn-warning'
+        = link_to '削除', task, method: :delete, class: 'btn btn-danger'
+
+br
 
 h2 作業時間トラッキング
 = link_to 'タスクの時間をはかる', track_tasks_path, class: "btn btn-primary"
+
+br
+br

@@ -1,9 +1,13 @@
+= form_with(model: @task, local: true) do |form|
+  - if @task.errors.any?
+    .alert.alert-danger
+      h4.alert-heading エラーが発生しました。
+      ul
+        - @task.errors.full_messages.each do |message|
+          li= message
 
-= form_with model: task do |form|
-  = form.label :name
-  = form.text_field :name
-  br
-  = form.label :rest
-  = form.check_box :rest
-  br
-  = form.submit
+  .form-group
+    = form.label :name, 'タスク名'
+    = form.text_field :name, class: 'form-control'
+
+  = form.submit '更新', class: 'btn btn-primary'
