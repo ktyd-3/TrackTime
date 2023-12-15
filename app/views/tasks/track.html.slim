@@ -5,9 +5,9 @@
 
 h2 今日の合計作業時間
 - if sum_time < 60
-  | "#{sum_time} 秒"
+  | #{sum_time} 秒
 - else 
-  | "#{sum_time / 60} 分"
+  | #{sum_time / 60} 分
 
 = pie_chart @task_data, library: { title: { text: 'Task Distribution' } } 
 
@@ -30,5 +30,5 @@ h2 作業時間トラッキング
     br
   - else
     = link_to '作業を開始する', start_task_path(task), method: :post, class: "btn btn-primary"  unless task.start_time.present?
-    = link_to '終了する', stop_task_path(task), method: :patch, class: "btn btn-primary"  if task.start_time.present?
+    = link_to '終了する', stop_task_path(task), method: :patch, class: "btn btn-warning"  if task.start_time.present?
     br

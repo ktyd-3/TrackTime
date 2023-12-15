@@ -27,7 +27,13 @@ class TasksController < ApplicationController
 
   def track
     @today_tasks = Task.where("DATE(created_at) = ?", Date.today)
-    @task_data = @today_tasks.map { |task| [task.name, task.end_time - task.start_time] }
+    @task_data = @today_tasks.map do |task|
+      if task.start_time.present? && task.end_time.present?
+        [task.name, (task.end_time - task.start_time)]
+      else
+        [task.name, 0]  # 合計時間をゼロとする
+      end
+    end
   end
 
   def next

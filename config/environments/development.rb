@@ -1,6 +1,13 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+
+    #即時反映されない問題
+    config.file_watcher = ActiveSupport::FileUpdateChecker
+    config.cache_classes = false
+    config.reload_classes_only_on_change = false
+
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -74,7 +81,6 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  #即時反映されない問題
-  config.file_watcher = ActiveSupport::FileUpdateChecker
+
 
 end

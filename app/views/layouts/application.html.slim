@@ -11,9 +11,9 @@ html
   body
     header
       nav
-        = link_to 'タスク一覧 ', root_path
-        = link_to '新規作成 ', new_task_path
-        = link_to '時間計測', track_tasks_path
+        = link_to 'タスク一覧', root_path, class: "btn btn-light"
+        = link_to '新規作成', new_task_path, class: "btn btn-light"
+        = link_to '時間計測', track_tasks_path, class: "btn btn-light"
       - if flash.notice.present?
         .alert.alert-success= flash.notice
       = yield

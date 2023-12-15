@@ -10,11 +10,12 @@ p
 - if @current_task.present?
   table
     tr
-      th 現在のタスク
+      th
+      h2=現在のタスク
       td= @current_task.name
       td= link_to '作業を完了する', next_task_path(@current_task), method: :post, class: "btn btn-primary"
       td= link_to '時間を記録する', start_task_path(@current_task), method: :post, class: "btn btn-primary"  unless @current_task.start_time.present?
-      td= link_to '記録を終了する', stop_task_path(@current_task), method: :patch, class: "btn btn-primary"  if task.start_time.present?
+      td= link_to '記録を終了する', stop_task_path(@current_task), method: :patch, class: "btn btn-primary"  if @current_task.start_time.present?
     tr
       - if @next_task.present?
         th = "Next ⇨ #{@next_task.name}"
